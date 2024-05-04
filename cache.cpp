@@ -1,5 +1,4 @@
 #include "cache.h"
-#include <iostream>
 #include <sstream>
 
 Cache::Cache() {
@@ -25,10 +24,8 @@ void Cache::add(std::string key, int value) {
         size--;
     }
 
-    CacheNode* newNode = new CacheNode;
-    newNode->key = key;
-    newNode->value.intValue = value;
-    newNode->isIntValue = true;
+    // 새로운 노드를 추가할 때 정수 값에 대한 생성자 호출
+    CacheNode* newNode = new CacheNode(key, value);
     newNode->next = head;
     head = newNode;
     size++;
@@ -43,10 +40,8 @@ void Cache::add(std::string key, double value) {
         size--;
     }
 
-    CacheNode* newNode = new CacheNode;
-    newNode->key = key;
-    newNode->value.doubleValue = value;
-    newNode->isIntValue = false;
+    // 새로운 노드를 추가할 때 실수 값에 대한 생성자 호출
+    CacheNode* newNode = new CacheNode(key, value);
     newNode->next = head;
     head = newNode;
     size++;
@@ -76,7 +71,7 @@ bool Cache::get(std::string key, double &value) {
     return false;
 }
 
-std::string Cache::toString() {
+std::string Cache::toString() const {
     std::ostringstream oss;
     CacheNode* current = head;
     bool isFirst = true; // 첫 번째 캐시인지 여부를 확인하기 위한 변수

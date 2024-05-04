@@ -3,59 +3,51 @@
 
 #include <string>
 
-// 해시 테이블 크기
-const int HASH_SIZE = 20;
-
-// 캐시 노드 구조체
+// 캐시 노드 구조체 정의
 struct CacheNode {
-    std::string key;
+    std::string key; // 키
     union {
-        int intValue;
-        double doubleValue;
+        int intValue;     // 정수 값
+        double doubleValue; // 실수 값
     } value;
-    bool isIntValue;
-    CacheNode* next;
+    bool isIntValue; // 값의 타입 (정수일 경우 true, 실수일 경우 false)
+    CacheNode* next; // 다음 노드를 가리키는 포인터
+
+    // 생성자 (키와 정수 값이 주어졌을 때)
     CacheNode(std::string key, int value) : key(key), isIntValue(true), next(nullptr) {
         this->value.intValue = value;
     }
+
+    // 생성자 (키와 실수 값이 주어졌을 때)
     CacheNode(std::string key, double value) : key(key), isIntValue(false), next(nullptr) {
         this->value.doubleValue = value;
     }
 };
 
-// 해시 클래스
-class Hash {
-public:
-    // 해시 함수
-    int hash(std::string key);
-};
-
-// 캐시 클래스
+// 캐시 클래스 정의
 class Cache {
 private:
-    // 해시 테이블
-    CacheNode* table[HASH_SIZE];
+    CacheNode* head; // 캐시의 헤드 포인터
+    int size; // 캐시의 크기
+    static const int CACHE_SIZE = 10; // 캐시의 최대 크기
 
 public:
-    // 생성자
-    Cache();
+    Cache(); // 생성자
+    ~Cache(); // 소멸자
 
-    // 소멸자
-    ~Cache();
-
-    // 캐시에 정수 값 추가
+    // 정수 값을 캐시에 추가하는 함수
     void add(std::string key, int value);
 
-    // 캐시에 실수 값 추가
+    // 실수 값을 캐시에 추가하는 함수
     void add(std::string key, double value);
 
-    // 키에 해당하는 정수 값 가져오기
-    bool get(std::string key, int &value) const;
+    // 키에 해당하는 정수 값을 가져오는 함수
+    bool get(std::string key, int &value);
 
-    // 키에 해당하는 실수 값 가져오기
-    bool get(std::string key, double &value) const;
+    // 키에 해당하는 실수 값을 가져오는 함수
+    bool get(std::string key, double &value);
 
-    // 캐시 정보 문자열로 변환
+    // 캐시 정보를 문자열로 반환하는 함수
     std::string toString() const;
 };
 
