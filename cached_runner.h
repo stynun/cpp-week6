@@ -2,26 +2,22 @@
 #define CACHED_RUNNER_H
 
 #include "cache.h"
+#include "task_runner.h"
 #include <string>
 
 class CachedRunner {
 private:
-  // TODO: private 멤버 변수와 함수 추가 가능
+    Cache& cache;
+    TaskRunner taskRunner;
+    int hitCount;
+    int missCount;
 
 public:
-  CachedRunner(Cache &cache);
-
-  // 파일의 숫자를 전부 곱하여 반환한다
-  double multiply(std::string filename);
-
-  // 파일에서 가장 긴 팰린드롬을 찾아 인덱스를 반환한다
-  int palindrome(std::string filename);
-
-  // 캐시에 히트한 횟수를 반환한다
-  int hits();
-
-  // 캐시에 미스한 횟수를 반환한다
-  int misses();
+    CachedRunner(Cache &cache);
+    double multiply(std::string filename);
+    int palindrome(std::string filename);
+    int hits();
+    int misses();
 };
 
 #endif
