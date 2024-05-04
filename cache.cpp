@@ -71,7 +71,7 @@ bool Cache::get(std::string key, double &value) {
     return false;
 }
 
-std::string Cache::toString() const {
+std::string Cache::toString() {
     std::ostringstream oss;
     CacheNode* current = head;
     bool isFirst = true; // 첫 번째 캐시인지 여부를 확인하기 위한 변수
